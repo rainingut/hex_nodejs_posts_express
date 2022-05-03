@@ -11,14 +11,29 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: [true, '內容必填']
     },
-    likes: Number,
-    comment: Number,
-    createdAt: Date,
-    type: [String],
-    tags: [String],
+    likes: {
+      type: Number,
+      default: 0
+    },
+    comment: {
+      type: Number,
+      default: 0
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now
+    },
+    type: {
+      type: [String],
+      default: []
+    },
+    tags: {
+      type: [String],
+      default: []
+    },
   },
   {versionKey: false}
-);
+);;
 
 const PostModel = new mongoose.model('posts', postSchema);
 
@@ -44,7 +59,8 @@ const postDB = async(post) => {
 }
 
 const patchDB = async(_id, data) => {
-  const result = await PostModel.findByIdAndUpdate(_id, data);
+  // 感謝二周目助教：findByIdAndUpdate第三個參數{ runValidators: true }，讓 findByIdAndUpdate 也可以跑 Schema 驗證規則。
+  const result = await PostModel.findByIdAndUpdate(_id, data, { runValidators: true });
   return result;
 }
 

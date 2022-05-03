@@ -13,22 +13,32 @@ const posts = {
   async postPost(request, response){
     try {
       const data = request.body;
+      if(!data.name || !data.name.trim()){
+        errorHandler(response, 400, {message: resMsg.titleRequired});
+        return;
+      }
+      if(!data.content || !data.content.trim()){
+        errorHandler(response, 400, {message: resMsg.contentRequired});
+        return;
+      }
+      data.name    = data.name.trim();
+      data.content = data.content.trim();
       PostModel.postDB(data)
         .then(async(result) => 
           successHandler(response, {
             message: resMsg.postSuccess, 
             data: await PostModel.getDB()
           }))
-        .catch(error => errorHandler({response, statusCode:400, content:{
+        .catch(error => errorHandler(response, 400, {
           message: resMsg.postFail,
           error
-        }}));
+        }));
     }
     catch(error) {
-      errorHandler({response, statusCode: 400, content: { 
+      errorHandler(response, 400, { 
         message: resMsg.wrongFormat, 
         error 
-      }});
+      });
     }
   },
 
@@ -36,15 +46,29 @@ const posts = {
   async patchPost(request,response){
     // const id = request.url.split('/').pop();
     const id = request.params.postId;
-    await PostModel.existsDB(id)
-      .catch(error => {errorHandler(  {response, statusCode:400, content:{
-        message: resMsg.noItem, error
-      }}  );});
     try {
+      const isexist = await PostModel.existsDB(id);
+      if(!isexist){
+        errorHandler(response, 400, {message: resMsg.noItem});
+        return;
+      }
       const data = request.body;
+      if(data.name !== undefined){
+        data.name = data.name.trim();
+        if(!data.name) {
+          errorHandler(response, 400, {message: resMsg.titleRequired});
+          return;
+        }
+      }
+      if(data.content !== undefined){
+        data.content = data.content.trim();
+        if(!data.content) {
+          errorHandler(response, 400, {message: resMsg.contentRequired});
+          return;
+        }
+      }
       PostModel.patchDB(id, data)
         .then(async(result) => {
-          console.log(result)
           const posts = await PostModel.getDB()
           successHandler(response, {
             message: resMsg.patchSuccess,
@@ -52,17 +76,17 @@ const posts = {
           })
         })
         .catch(error => {
-          errorHandler({response, statusCode:400, content:{
+          errorHandler(response, 400, {
             message: resMsg.patchFail,
             error,
-          }}); 
+          }); 
         });
     }
     catch(error){
-      errorHandler({response, statusCode: 400, content: { 
-        message: resMsg.wrongFormat, 
+      errorHandler(response, 400, { 
+        message: resMsg.wrongFormatOrNoItem, 
         error 
-      }});
+      });
     }
   },
 
@@ -70,24 +94,33 @@ const posts = {
   async deletePost(request,response){
     // const id = request.url.split('/').pop();
     const id = request.params.postId;
-    await PostModel.existsDB(id)
-    .catch(error => errorHandler(  {response, statusCode:400, content:{
-      message: resMsg.noItem, error
-    }}  ));
-    PostModel.deleteOneDB(id)
-      .then(async(result) => {
-        const posts = await PostModel.getDB()
-        successHandler(response, {
-          message: resMsg.deleteSuccess,
-          data: posts, 
+    try {
+      const isexist = await PostModel.existsDB(id);
+      if(!isexist){
+        errorHandler(response, 400, {message: resMsg.noItem});
+        return;
+      }
+      PostModel.deleteOneDB(id)
+        .then(async(result) => {
+          const posts = await PostModel.getDB()
+          successHandler(response, {
+            message: resMsg.deleteSuccess,
+            data: posts, 
+          })
         })
+        .catch(error => {
+          errorHandler(response, 400, {
+            message:resMsg.deleteFail,
+            error
+          }); 
+        });
+    }
+    catch(error){
+      errorHandler(response, 400, {
+        message: resMsg.wrongFormatOrNoItem,
+        error
       })
-      .catch(error => {
-        errorHandler({response, statusCode:400, content:{
-          message:resMsg.deleteFail,
-          error
-        }}); 
-      });
+    }
   },
 
 
@@ -98,10 +131,10 @@ const posts = {
         message: resMsg.deleteAllSuccess, 
         data: []
       }))
-      .catch(error => errorHandler({response, statusCode:400, content:{
+      .catch(error => errorHandler(response, 400, {
         message: resMsg.deleteAllFail, 
         error
-      }}));
+      }));
   },
 };
 

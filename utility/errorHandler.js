@@ -1,4 +1,4 @@
-const errorHandler = ({response, statusCode, content}) => {
+const errorHandler = (response, statusCode, content) => {
   response
   .status(statusCode)
   .send({
