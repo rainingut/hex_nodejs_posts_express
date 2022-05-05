@@ -65,7 +65,7 @@ const patchDB = async(_id, data) => {
 }
 
 const existsDB = async(_id) => {
-  const result = await PostModel.findOne({_id});
+  const result = await PostModel.findById(_id);
   return result;
 }
 
