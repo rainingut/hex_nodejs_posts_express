@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/posts', postsRouter);                   // 使用 posts 路由
 app.use('/users', usersRouter);
 app.use(function(request, response, next){            // middle 查無此頁面
-	response.status(404).send(responseMessage.noPage);
+	response.status(404).send({status: false, message: responseMessage.noPage});
 });
 
 module.exports = app;

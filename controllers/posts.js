@@ -44,14 +44,8 @@ const posts = {
 
 
   async patchPost(request,response){
-    // const id = request.url.split('/').pop();
     const id = request.params.postId;
     try {
-      const isexist = await PostModel.existsDB(id);
-      if(!isexist){
-        errorHandler(response, 400, {message: resMsg.noItem});
-        return;
-      }
       const data = request.body;
       if(data.name !== undefined){
         data.name = data.name.trim();
@@ -69,6 +63,11 @@ const posts = {
       }
       PostModel.patchDB(id, data)
         .then(async(result) => {
+          if(!result) {
+            return errorHandler(response, 400, {
+              message: resMsg.noItem,
+            }); 
+          }
           const posts = await PostModel.getDB()
           successHandler(response, {
             message: resMsg.patchSuccess,
@@ -77,7 +76,8 @@ const posts = {
         })
         .catch(error => {
           errorHandler(response, 400, {
-            message: resMsg.patchFail,
+            // message: resMsg.patchFail,
+            message: resMsg.wrongFormatOrNoItem, 
             error,
           }); 
         });
@@ -92,16 +92,15 @@ const posts = {
 
 
   async deletePost(request,response){
-    // const id = request.url.split('/').pop();
     const id = request.params.postId;
     try {
-      const isexist = await PostModel.existsDB(id);
-      if(!isexist){
-        errorHandler(response, 400, {message: resMsg.noItem});
-        return;
-      }
       PostModel.deleteOneDB(id)
         .then(async(result) => {
+          if(!result){
+            errorHandler(response, 400, {
+              message:resMsg.noItem,
+            });   
+          }
           const posts = await PostModel.getDB()
           successHandler(response, {
             message: resMsg.deleteSuccess,
@@ -110,7 +109,8 @@ const posts = {
         })
         .catch(error => {
           errorHandler(response, 400, {
-            message:resMsg.deleteFail,
+            // message:resMsg.deleteFail,
+            message: resMsg.wrongFormatOrNoItem,
             error
           }); 
         });
