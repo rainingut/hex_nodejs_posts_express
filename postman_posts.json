@@ -45,7 +45,8 @@
 									"description": "關鍵字搜尋"
 								}
 							]
-						}
+						},
+						"description": "網址列可帶查詢參數\n\n*   `q`：關鍵字\n*   `timeSort`：依新增時間排序\n    *   `asc` ：由小到大 或\n    *   `desc`：由大到小\n\n``` json\n{\n    \"status\": true,\n    \"data\": [\n        {\n            \"_id\": \"627b3b1276cb9f85554f235f\",\n            \"name\": \"測試一個\",\n            \"image\": null,\n            \"content\": \"我是測試內容\",\n            \"user\": {\n                \"_id\": \"627b338faf6b9972e353ac19\",\n                \"name\": \"TESTMAN\"\n            },\n            \"likes\": 0,\n            \"comment\": 0,\n            \"type\": [],\n            \"tags\": [],\n            \"createdAt\": \"2022-05-11T04:26:58.802Z\"\n        }\n    ]\n}\n\n```"
 					},
 					"response": []
 				},
@@ -63,7 +64,8 @@
 								"posts",
 								"{{postId}}"
 							]
-						}
+						},
+						"description": "``` json\n{\n    \"status\": true,\n    \"data\": {\n        \"_id\": \"627b3b1276cb9f85554f235f\",\n        \"name\": \"測試一個\",\n        \"image\": null,\n        \"content\": \"我是測試內容\",\n        \"user\": \"627b338faf6b9972e353ac19\",\n        \"likes\": 0,\n        \"comment\": 0,\n        \"type\": [],\n        \"tags\": [],\n        \"createdAt\": \"2022-05-11T04:26:58.802Z\"\n    }\n}\n\n```"
 					},
 					"response": []
 				},
@@ -89,7 +91,8 @@
 							"path": [
 								"posts"
 							]
-						}
+						},
+						"description": "*   `user`：使用者ID（必填）\n*   `name`：貼文標題（必填）\n*   `content`：貼文內容（必填）\n*   `image`：圖片網址（選填）\n    \n\n``` json\n\n    \"status\": true,\n    \"message\": \"新增成功\",\n    \"data\": [\n        {\n            \"_id\": \"627b3aa376cb9f85554f2350\",\n            \"name\": \"測試一個\",\n            \"image\": null,\n            \"content\": \"我是測試內容\",\n            \"user\": {\n                \"_id\": \"627b338faf6b9972e353ac19\",\n                \"name\": \"TESTMAN\"\n            },\n            \"likes\": 0,\n            \"comment\": 0,\n            \"type\": [],\n            \"tags\": [],\n            \"createdAt\": \"2022-05-11T04:25:07.974Z\"\n        }\n    ]\n}\n\n```"
 					},
 					"response": []
 				},
@@ -116,7 +119,8 @@
 								"posts",
 								"{{postId}}"
 							]
-						}
+						},
+						"description": "``` json\n{\n    \"status\": true,\n    \"message\": \"更新成功\",\n    \"data\": [\n        {\n            \"_id\": \"627b3aa376cb9f85554f2350\",\n            \"name\": \"已修改的標題\",\n            \"image\": null,\n            \"content\": \"我是測試內容\",\n            \"user\": {\n                \"_id\": \"627b338faf6b9972e353ac19\",\n                \"name\": \"TESTMAN\"\n            },\n            \"likes\": 0,\n            \"comment\": 0,\n            \"type\": [],\n            \"tags\": [],\n            \"createdAt\": \"2022-05-11T04:25:07.974Z\"\n        }\n    ]\n}\n\n```"
 					},
 					"response": []
 				},
@@ -134,7 +138,8 @@
 								"posts",
 								"{{postId}}"
 							]
-						}
+						},
+						"description": "``` json\n{\n    \"status\": true,\n    \"message\": \"刪除成功\",\n    \"data\": [\n        {\n            \"_id\": \"627b3b1276cb9f85554f235f\",\n            \"name\": \"測試一個\",\n            \"image\": null,\n            \"content\": \"我是測試內容\",\n            \"user\": {\n                \"_id\": \"627b338faf6b9972e353ac19\",\n                \"name\": \"TESTMAN\"\n            },\n            \"likes\": 0,\n            \"comment\": 0,\n            \"type\": [],\n            \"tags\": [],\n            \"createdAt\": \"2022-05-11T04:26:58.802Z\"\n        }\n    ]\n}\n\n```"
 					},
 					"response": []
 				},
@@ -151,7 +156,8 @@
 							"path": [
 								"posts"
 							]
-						}
+						},
+						"description": "``` json\n{\n    \"status\": true,\n    \"message\": \"全部項目刪除成功\",\n    \"data\": []\n}\n\n```"
 					},
 					"response": []
 				}
@@ -173,7 +179,8 @@
 							"path": [
 								"users"
 							]
-						}
+						},
+						"description": "``` json\n{\n    \"status\": true,\n    \"data\": [\n        {\n            \"_id\": \"627b338faf6b9972e353ac19\",\n            \"name\": \"TESTMAN\",\n            \"avatar\": \"\",\n            \"likes\": [],\n            \"following\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-11T03:54:55.516Z\"\n        }\n    ]\n}\n\n```"
 					},
 					"response": []
 				},
@@ -191,7 +198,8 @@
 								"users",
 								"{{userId}}"
 							]
-						}
+						},
+						"description": "``` json\n{\n    \"status\": true,\n    \"data\": [\n        {\n            \"_id\": \"627b338faf6b9972e353ac19\",\n            \"name\": \"TESTMAN\",\n            \"avatar\": \"\",\n            \"likes\": [],\n            \"following\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-11T03:54:55.516Z\"\n        }\n    ]\n}\n\n```"
 					},
 					"response": []
 				},
@@ -217,7 +225,8 @@
 							"path": [
 								"users"
 							]
-						}
+						},
+						"description": "*   `name`：string, 暱稱（必填）\n*   `eamil`：string, 帳號（必填）\n*   `password`：string, 密碼（必填）\n*   `confirmPsw`：string, 密碼確認（必填）\n    \n\n``` json\n{\n    \"status\": true,\n    \"message\": \"新增成功\",\n    \"data\": {\n        \"name\": \"TESTMAN\",\n        \"email\": \"testman@mail.com\",\n        \"password\": \"123456\",\n        \"avatar\": \"\",\n        \"likes\": [],\n        \"following\": [],\n        \"_id\": \"627b388a76cb9f85554f2340\",\n        \"comments\": [],\n        \"createdAt\": \"2022-05-11T04:16:10.309Z\"\n    }\n}\n\n```"
 					},
 					"response": []
 				},
@@ -244,7 +253,8 @@
 								"users",
 								"{{userId}}"
 							]
-						}
+						},
+						"description": "``` json\n{\n    \"status\": true,\n    \"message\": \"更新成功\",\n    \"data\": [\n        {\n            \"_id\": \"627b338faf6b9972e353ac19\",\n            \"name\": \"美索不達米亞\",\n            \"avatar\": \"\",\n            \"likes\": [],\n            \"following\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-11T03:54:55.516Z\"\n        }\n    ]\n}\n\n```"
 					},
 					"response": []
 				},
@@ -262,7 +272,8 @@
 								"users",
 								"{{userId}}"
 							]
-						}
+						},
+						"description": "``` json\n{\n    \"status\": true,\n    \"message\": \"刪除成功\",\n    \"data\": [\n        {\n            \"_id\": \"627b338faf6b9972e353ac19\",\n            \"name\": \"TESTMAN\",\n            \"avatar\": \"\",\n            \"likes\": [],\n            \"following\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-11T03:54:55.516Z\"\n        }\n    ]\n}\n\n```"
 					},
 					"response": []
 				},
@@ -279,7 +290,8 @@
 							"path": [
 								"users"
 							]
-						}
+						},
+						"description": "``` json\n{\n    \"status\": true,\n    \"message\": \"全部項目刪除成功\",\n    \"data\": []\n}\n\n```"
 					},
 					"response": []
 				}
