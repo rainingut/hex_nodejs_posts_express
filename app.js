@@ -18,10 +18,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/posts', postsRouter);                   // 使用 posts 路由
+
+// 程式出現重大錯誤
+process.on('uncaghtException', err => {
+	console.error('UncaughtException!');
+	console.error(err);
+	process.exit(1);
+})
+// 使用路由
+app.use('/posts', postsRouter); 
 app.use('/users', usersRouter);
-app.use(function(request, response, next){            // middle 查無此頁面
+// middle 查無此頁面
+app.use(function(request, response, next){            
 	response.status(404).send({status: false, message: responseMessage.noPage});
 });
+// 非同步錯誤
+process.on('unhandledRejection', function(reason, promise){
+	console.error('未捕捉到的 rejection：', promise, '原因：', reason);
+});
+
+
 
 module.exports = app;
