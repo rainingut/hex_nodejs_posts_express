@@ -145,7 +145,7 @@ const users = {
       await UserModel.patchDB(id, data)
       .then(async result => {
         if (!result) {
-          return errorHandler(response, 400, {message: resMsg.wrongFormatOrNoItem, error});
+          return errorHandler(response, 400, {message: resMsg.noItem, error});
         }
         const users = await UserModel.getAllDB();
         successHandler(response, {
@@ -154,7 +154,7 @@ const users = {
         });
       })
       .catch(error => errorHandler(response, 400, {
-        message: resMsg.patchFail, 
+        message: resMsg.wrongFormatOrNoItem, 
         error
       })  );
     }

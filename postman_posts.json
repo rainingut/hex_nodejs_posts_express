@@ -41,7 +41,8 @@
 								},
 								{
 									"key": "q",
-									"value": "測試"
+									"value": "測試",
+									"description": "關鍵字搜尋"
 								}
 							]
 						}
@@ -73,7 +74,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{ \r\n    \"user\": \"627b310cee501311acb22c34\",\r\n    \"name\" : \"測試一個\", \r\n    \"content\":\"我是測試內容\"\r\n}",
+							"raw": "{ \r\n    \"user\": \"627b338faf6b9972e353ac19\",\r\n    \"name\" : \"測試一個\", \r\n    \"content\":\"我是測試內容\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -201,7 +202,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Lawrence\",\r\n    \"email\":\"lawrence@mail.com\",\r\n    \"password\":\"123456\",\r\n    \"confirmPsw\":\"123456\"\r\n}",
+							"raw": "{\r\n    \"name\":\"TESTMAN\",\r\n    \"email\":\"testman@mail.com\",\r\n    \"password\":\"123456\",\r\n    \"confirmPsw\":\"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
