@@ -7,7 +7,7 @@ const resMsg = require('../utility/responseMessage');
 const posts = {
   async getPosts(request, response){
     const query    = request.query;
-    const timeSort = query.timeSort===undefined ? '-createdAt' : 'createdAt';
+    const timeSort = query.timeSort==='desc' ? '-createdAt' : 'createdAt';
     const keyword  = query.q===undefined ? {} : { content :new RegExp(query.q) };
     const posts = await PostModel.getAllDB(keyword, timeSort)
       .catch(error => errorHandler(response, 400, { message: resMsg.somethingWrong, error }));
