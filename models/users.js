@@ -42,6 +42,11 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    permission: {
+      type: String, 
+      enum: ['user', 'admin'],
+      default: 'user',
+    },
   },
   {
     versionKey: false,
