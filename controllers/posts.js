@@ -13,7 +13,7 @@ const posts = {
     const posts = await PostModel.getAllDB(keyword, timeSort)
     successHandler(response, {data: posts});
   },
-
+  
   async getPost(request, response, next){
     const id = request.params.postId;
     const post = await PostModel.getOneDB(id)

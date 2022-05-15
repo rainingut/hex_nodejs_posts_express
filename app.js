@@ -8,6 +8,9 @@ const postsRouter = require('./routes/posts');           // 引入 posts 路由
 const usersRouter = require('./routes/users');           // 引入 users 路由
 const responseMessage = require('./utility/responseMessage'); // 回覆訊息
 
+const swaggerUi   = require('swagger-ui-express');
+const swaggerFile = require('./swagger_output.json');
+
 var app = express();
 require('./connections');                             // 連線資料庫
 
@@ -33,7 +36,7 @@ process.on('uncaughtException', (error) => {
 // 使用路由
 app.use('/posts', postsRouter); 
 app.use('/users', usersRouter);
-
+app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 
 // middle 404 查無此頁面
