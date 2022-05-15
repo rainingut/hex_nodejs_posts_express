@@ -4,10 +4,11 @@ const PostsControllers = require('../controllers/posts');
 const asyncError = require('../utility/asyncError');
 
 router.get('/', asyncError(PostsControllers.getPosts)
+  // #region 
   /**
     #swagger.tags = ['Posts']
     #swagger.description = '取得全部貼文資料'
-  * https://medium.com/swlh/dd1ab3c78284
+    * https://medium.com/swlh/dd1ab3c78284
     #swagger.parameters['q']: {
       in: "query",
       description: '關鍵字查詢',
@@ -47,9 +48,11 @@ router.get('/', asyncError(PostsControllers.getPosts)
         ]
       }
     }
-   */ 
+  */ 
+ // #endregion
 );
 router.post('/', asyncError(PostsControllers.postPost)
+  // #region
   /**
     #swagger.tags = ['Posts']
     #swagger.description = '新增單一貼文資料'
@@ -91,9 +94,11 @@ router.post('/', asyncError(PostsControllers.postPost)
       }
     }
   */
+ // #endregion
 );
 router.delete('/', asyncError(PostsControllers.deletePosts)
-  /*
+  // #region
+  /**
     #swagger.tags = ['Posts']
     #swagger.description = '刪除全部貼文資料'
     #swagger.security = [{
@@ -108,8 +113,10 @@ router.delete('/', asyncError(PostsControllers.deletePosts)
       }
     }
   */
+ // #endregion
 );
 router.get('/:postId', asyncError(PostsControllers.getPost)
+  // #region
   /*
     #swagger.tags = ['Posts']
     #swagger.description = '取得單一貼文資料'
@@ -132,8 +139,10 @@ router.get('/:postId', asyncError(PostsControllers.getPost)
       }
     }
   */
+ // #endregion
 );
 router.patch('/:postId', asyncError(PostsControllers.patchPost)
+  // #region  swagger
   /*
     #swagger.tags = ['Posts']
     #swagger.description = '修改單一貼文資料'
@@ -148,8 +157,10 @@ router.patch('/:postId', asyncError(PostsControllers.patchPost)
       }
     }
   */
+ // #endregion
 );
 router.delete('/:postId', asyncError(PostsControllers.deletePost)
+  // #region
   /*
     #swagger.tags = ['Posts']
     #swagger.description = '刪除單一貼文資料'
@@ -164,6 +175,7 @@ router.delete('/:postId', asyncError(PostsControllers.deletePost)
       }
     }
   */
+ // #endregion
 );
 
 module.exports = router;
