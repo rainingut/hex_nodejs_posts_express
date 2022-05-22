@@ -18,6 +18,8 @@ const responseMessage = {
 
   // users
   noUser:              '查無使用者',
+  noSelf:              '非本人',
+  cantSelf:            '不能作自己',
   nameRequired:        '暱稱必填',
   emailRequired:       'Email必填',
   passwordRequired:    '密碼必填',
@@ -28,8 +30,20 @@ const responseMessage = {
   imageNotMatch:       '圖片格式不符',
   sexNotMatch:         '生理性別不是男或女',
 
+  //auth
+  noSignIn:            '尚未登入',
+  noAdmin:             '權限不足',
+
   // 開大絕
   somethingWrong:      'Something Wrong',
+
+  // 覺得小組這樣的寫法很棒，效仿的～ XD
+  // (但是還沒用XD)
+  FAIL: {
+    status: 1,
+    statusCode: 400,
+    message: `失敗`
+  }
 }
 
 module.exports = responseMessage;

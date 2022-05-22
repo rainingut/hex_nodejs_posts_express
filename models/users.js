@@ -53,57 +53,8 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-const userModel = new mongoose.model('users', userSchema);
-
-
-const getAllDB = async() => {
-  const result = await userModel.find();
-  return result;
-}
-
-const getOneDB = async(_id) => {
-  const result = await userModel.findById(_id);
-  return result;
-}
-
-const deleteAllDB = async () => {
-  const result = await userModel.deleteMany();
-  return result;
-}
-
-const deleteOneDB = async (_id) => {
-  const result = await userModel.findByIdAndDelete(_id);
-  return result;
-}
-
-const postDB = async(user) => {
-  const result = await userModel.create(user);
-  return result;
-}
-
-const patchDB = async(_id, data) => {
-  const result = await userModel.findByIdAndUpdate(_id, data, { runValidators: true });
-  return result;
-}
-
-const existsDB = async(_id) => {
-  const result = await userModel.findById(_id);
-  return result;
-}
-
-const accountExistDB = async(email) => {
-  const result = await userModel.findOne({email});
-  return result;
-}
+const UserModel = new mongoose.model('users', userSchema);
 
 module.exports = {
-  // UserModel
-  getAllDB,
-  getOneDB,
-  postDB,
-  patchDB,
-  deleteOneDB,
-  deleteAllDB,
-  existsDB,
-  accountExistDB,
+  UserModel,
 };
