@@ -98,11 +98,11 @@ app.use(function(error, request, response, next){
 		error.message = responseMessage.wrongFormat;
 		return prodResError(error, response);
 	}
-	// invalid signature
-	if(error.message === 'invalid signature'){
+	// JWT
+	if(error?.name === 'JsonWebTokenError'){
 		error.statusCode = 403;
 		error.isOperational = true;
-		error.message = `token 錯誤`;
+		error.message = `token 無效`;
 		return prodResError(error, response);
 	}
 	// not validator
