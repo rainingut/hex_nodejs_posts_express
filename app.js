@@ -6,6 +6,7 @@ const cors = require('cors');
 
 const postsRouter = require('./routes/posts');           // 引入 posts 路由
 const usersRouter = require('./routes/users');           // 引入 users 路由
+const uploadRouter = require('./routes/upload'); 				 // 引入 upload 路由
 const responseMessage = require('./utility/responseMessage'); // 回覆訊息
 
 const swaggerUi   = require('swagger-ui-express');
@@ -36,6 +37,7 @@ process.on('uncaughtException', (error) => {
 // 使用路由
 app.use('/posts', postsRouter); 
 app.use('/users', usersRouter);
+app.use('/upload', uploadRouter);
 app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 

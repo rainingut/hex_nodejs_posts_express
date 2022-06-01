@@ -34,6 +34,10 @@ const responseMessage = {
   noSignIn:            '尚未登入',
   noAdmin:             '權限不足',
 
+  // upload
+  imageFormat:         '僅限jpg, png, 或 jpeg',
+  nofile:              '尚未上傳',
+
   // 開大絕
   somethingWrong:      'Something Wrong',
 
