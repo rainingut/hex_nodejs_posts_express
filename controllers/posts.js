@@ -55,7 +55,7 @@ const posts = {
       if(!user){
         return appError(400, resMsg.noUser, next);
       }
-      console.log(data)
+      // console.log(data)
       const newPost = await PostModel.create(data)
       if (!newPost) {
         return appError(400, resMsg.postFail, next);

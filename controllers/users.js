@@ -204,7 +204,7 @@ const users = {
       // 密碼對不對
       // console.log(password, user?.password)
       const isPsw = await comparePsw(password, user.password);
-      console.log(isPsw)
+      // console.log(isPsw)
       if(!isPsw) {
         return next(appError(403, resMsg.passwordWroung, next));
       }
