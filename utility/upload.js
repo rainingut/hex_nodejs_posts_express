@@ -3,10 +3,9 @@ const responseMessage = require('./responseMessage');
 const multer = require('multer');
 const path = require('path');
 
-const errorHandler = (message, statusCode = 403) => {
+const errorHandler = (message) => {
   const error = new Error(message);
-  error.statusCode = 403;
-  error.isOperational = true;
+  error.name = `MulterFilterError`;
   return error;
 }
 

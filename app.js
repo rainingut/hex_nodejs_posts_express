@@ -105,6 +105,13 @@ app.use(function(error, request, response, next){
 		error.message = `token 無效`;
 		return prodResError(error, response);
 	}
+	// imgur
+	if(error?.name === 'MulterFilterError'){
+		error.statusCode = 403;
+		error.isOperational = true;
+		error.message = responseMessage.imageFormat;
+		return prodResError(error, response);
+	}
 	// not validator
 	return prodResError(error, response);
 });
