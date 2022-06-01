@@ -98,6 +98,13 @@ app.use(function(error, request, response, next){
 		error.message = responseMessage.wrongFormat;
 		return prodResError(error, response);
 	}
+	// invalid signature
+	if(error.message === 'invalid signature'){
+		error.statusCode = 403;
+		error.isOperational = true;
+		error.message = `token 錯誤`;
+		return prodResError(error, response);
+	}
 	// not validator
 	return prodResError(error, response);
 });

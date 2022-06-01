@@ -210,33 +210,6 @@
 			"name": "users",
 			"item": [
 				{
-					"name": "user_sign_in(token)",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"testman2@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/users/sign_in",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"sign_in"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "get_all_users",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -304,34 +277,6 @@
 							]
 						},
 						"description": "``` json\n{\n    \"status\": true,\n    \"data\": [\n        {\n            \"_id\": \"627b338faf6b9972e353ac19\",\n            \"name\": \"TESTMAN\",\n            \"avatar\": \"\",\n            \"likes\": [],\n            \"following\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-11T03:54:55.516Z\"\n        }\n    ]\n}\n\n```"
-					},
-					"response": []
-				},
-				{
-					"name": "add_one_user",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"TESTMAN3\",\r\n    \"email\":\"testman3@gmail.com\",\r\n    \"password\":\"123456\",\r\n    \"confirmPsw\":\"123456\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/users/sign_up",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"sign_up"
-							]
-						},
-						"description": "*   `name`：string, 暱稱（必填）\n*   `eamil`：string, 帳號（必填）\n*   `password`：string, 密碼（必填）\n*   `confirmPsw`：string, 密碼確認（必填）\n    \n\n``` json\n{\n    \"status\": true,\n    \"message\": \"新增成功\",\n    \"data\": {\n        \"name\": \"TESTMAN\",\n        \"email\": \"testman@mail.com\",\n        \"password\": \"123456\",\n        \"avatar\": \"\",\n        \"likes\": [],\n        \"following\": [],\n        \"_id\": \"627b388a76cb9f85554f2340\",\n        \"comments\": [],\n        \"createdAt\": \"2022-05-11T04:16:10.309Z\"\n    }\n}\n\n```"
 					},
 					"response": []
 				},
@@ -458,8 +403,126 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "upload",
+			"item": [
+				{
+					"name": "upload_image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/upload",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"upload"
+							]
+						},
+						"description": "*   傳送形式： `form-data`\n*   圖片格式： `.png` 或 `.jpg`\n*   限制大小： 2MB"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sign_up(add_one_user)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"TESTMAN3\",\r\n    \"email\":\"testman3@gmail.com\",\r\n    \"password\":\"123456\",\r\n    \"confirmPsw\":\"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/sign_up",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"sign_up"
+					]
+				},
+				"description": "*   `name`：string, 暱稱（必填）\n*   `eamil`：string, 帳號（必填）\n*   `password`：string, 密碼（必填）\n*   `confirmPsw`：string, 密碼確認（必填）\n    \n\n``` json\n{\n    \"status\": true,\n    \"message\": \"新增成功\",\n    \"data\": {\n        \"name\": \"TESTMAN\",\n        \"email\": \"testman@mail.com\",\n        \"password\": \"123456\",\n        \"avatar\": \"\",\n        \"likes\": [],\n        \"following\": [],\n        \"_id\": \"627b388a76cb9f85554f2340\",\n        \"comments\": [],\n        \"createdAt\": \"2022-05-11T04:16:10.309Z\"\n    }\n}\n\n```"
+			},
+			"response": []
+		},
+		{
+			"name": "sign_in(token)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"testman2@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/users/sign_in",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"users",
+						"sign_in"
+					]
+				}
+			},
+			"response": []
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -500,7 +563,7 @@
 		},
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2ZkYzUyMzYwZDQzNTY1ODhkY2NmMSIsImlhdCI6MTY1MzIxMDIyNSwiZXhwIjoxNjUzMjk2NjI1fQ.7HmtFamv4SUEQlM36MCe7wa5fLhkks9XdMKUQAf68Ks",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODM5Yzk5M2ZmMjk4MjllOWZkNjcxYSIsImlhdCI6MTY1NDA1Nzg3MCwiZXhwIjoxNjU0MTQ0MjcwfQ.vkBQ6wlPHtEGycl_DYQaXx49maCXCaUhIJz_1IN5MbI",
 			"type": "string",
 			"disabled": true
 		}
