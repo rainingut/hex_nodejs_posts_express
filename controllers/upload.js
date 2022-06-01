@@ -8,8 +8,9 @@ const responseMessage = require('../utility/responseMessage');
 const upload = {
   uploadImage: 
     asyncError(async(request, response, next) => {
+      console.log(request.files.length<=0)
       if (request.files.length <= 0) {
-        return next(appError(403, responseMessage, next))
+        return next(appError(403, responseMessage.nofile, next))
       }
       const client = new ImgurClient({
         clientId: process.env.IMGUR_CLIENTID,
