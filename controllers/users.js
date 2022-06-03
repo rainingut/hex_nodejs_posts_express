@@ -211,6 +211,23 @@ const users = {
       generateSendJWT(response, user);
     }
   ),
+
+  // 按讚列表
+  getLikeList: asyncError(
+    async(request, response, next) => {
+      const userId = request?.user?.id;
+      if (!userId) {
+        return next(appError(400, resMsg.noUser, next));
+      }
+      const likes = await PostModel.find({likes:{$in: [userId]}})
+      .select('name user createdAt')
+      .populate({
+        path: 'user',
+        select: 'name avatar'
+      })
+      successHandler(response, { data: likes });
+    }
+  ),
 };
 
 module.exports = users;

@@ -20,17 +20,18 @@ const postSchema = new mongoose.Schema(
       ref: 'users',
       required: [true, '使用者必填'],
     },
-    likes: {
-      type: Number,
-      default: 0
-    },
+    likes: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'users',
+      },
+    ],
     comment: {
       type: Number,
       default: 0
     },
     createdAt: {
-      type: Date,
-      default: Date.now
+      type: Number
     },
     type: {
       type: [String],
@@ -41,7 +42,12 @@ const postSchema = new mongoose.Schema(
       default: []
     },
   },
-  {versionKey: false}
+  {
+    versionKey: false,
+    timestamps: {
+      currentTime: () => Date.now()
+    }
+  }
 );;
 
 const PostModel = new mongoose.model('posts', postSchema);

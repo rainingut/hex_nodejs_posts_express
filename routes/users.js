@@ -109,7 +109,10 @@ router
       }
     */
     // #endregion
-  )
+  );
+
+// 取得按讚列表
+router.get('/getLikeList', isAuth, UsersController.getLikeList);
 
 router
   .route('/:userId')

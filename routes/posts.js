@@ -118,6 +118,9 @@ router
   // #endregion
   );
 
+// 取得個人所有貼文列表
+router.get('/user/:userId', PostsController.getOneUserPosts);
+
 router
   .route('/:postId')
   .get(PostsController.getPost
@@ -181,6 +184,13 @@ router
       }
     */
   // #endregion
-  );
+  )
+
+// 按讚
+router.post('/:postId/like', isAuth, PostsController.addLike);
+
+// 取消按讚
+router.delete('/:postId/unlike', isAuth, PostsController.deleteLike);
+
 
 module.exports = router;
