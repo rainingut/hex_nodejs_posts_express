@@ -6,7 +6,7 @@ const asyncError = require('../utility/asyncError');
 
 router
   .route('/')
-  .get(isAuth, UsersController.getUsers
+  .get(isAuth, isAdmin, UsersController.getUsers
     // #region
     /**
       #swagger.tags = ['Users']

@@ -7,10 +7,508 @@
 	},
 	"item": [
 		{
-			"name": "posts",
+			"name": "會員功能",
 			"item": [
 				{
-					"name": "get_all_posts",
+					"name": "註冊",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"test3\",\r\n    \"email\":\"test3@gmail.com\",\r\n    \"password\":\"123456\",\r\n    \"confirmPsw\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/sign_up",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"sign_up"
+							]
+						},
+						"description": "*   `name`：string, 暱稱（必填）\n*   `eamil`：string, 帳號（必填）\n*   `password`：string, 密碼（必填）\n*   `confirmPsw`：string, 密碼確認（必填）\n    \n\n``` json\n{\n    \"status\": true,\n    \"message\": \"新增成功\",\n    \"data\": {\n        \"name\": \"TESTMAN\",\n        \"email\": \"testman@mail.com\",\n        \"password\": \"123456\",\n        \"avatar\": \"\",\n        \"likes\": [],\n        \"following\": [],\n        \"_id\": \"627b388a76cb9f85554f2340\",\n        \"comments\": [],\n        \"createdAt\": \"2022-05-11T04:16:10.309Z\"\n    }\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "登入",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"testman@mail.com\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/sign_in",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"sign_in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "重設密碼",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"123456\",\r\n    \"confirmPsw\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/updatePassword",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人資料",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						},
+						"description": "``` json\n{\n    \"status\": true,\n    \"data\": [\n        {\n            \"_id\": \"627b338faf6b9972e353ac19\",\n            \"name\": \"TESTMAN\",\n            \"avatar\": \"\",\n            \"likes\": [],\n            \"following\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-11T03:54:55.516Z\"\n        }\n    ]\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "更新個人資料",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"TEST_MAN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						},
+						"description": "``` json\n{\n    \"status\": true,\n    \"message\": \"更新成功\",\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "get_all_users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "``` json\n{\n    \"status\": true,\n    \"data\": [\n        {\n            \"_id\": \"627b338faf6b9972e353ac19\",\n            \"name\": \"TESTMAN\",\n            \"avatar\": \"\",\n            \"likes\": [],\n            \"following\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-11T03:54:55.516Z\"\n        }\n    ]\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "delete_one_user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userId}}"
+							]
+						},
+						"description": "``` json\n{\n    \"status\": true,\n    \"message\": \"刪除成功\",\n    \"data\": [\n        {\n            \"_id\": \"627b338faf6b9972e353ac19\",\n            \"name\": \"TESTMAN\",\n            \"avatar\": \"\",\n            \"likes\": [],\n            \"following\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-11T03:54:55.516Z\"\n        }\n    ]\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "(取消)delete_all_user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "``` json\n{\n    \"status\": true,\n    \"message\": \"全部項目刪除成功\",\n    \"data\": []\n}\n\n```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "會員按讚追蹤動態",
+			"item": [
+				{
+					"name": "追蹤朋友",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/{{userId}}/follow",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userId}}",
+								"follow"
+							]
+						},
+						"description": "*   `userId` ： 追蹤之user ID"
+					},
+					"response": []
+				},
+				{
+					"name": "取消追蹤朋友",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/{{userId}}/unfollow",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userId}}",
+								"unfollow"
+							]
+						},
+						"description": "*   `userId` ： 取消追蹤之user ID"
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人追蹤名單",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/following",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"following"
+							]
+						},
+						"description": "statusCode: 200\n\n``` json\n{\n    \"status\": true,\n    \"data\": {\n        \"_id\": \"629abdcb7bcc77cf317d6ea7\",\n        \"followings\": [\n            {\n                \"user\": {\n                    \"_id\": \"629abd9c7bcc77cf317d6e9c\",\n                    \"name\": \"test3\",\n                    \"avatar\": \"\"\n                },\n                \"_id\": \"629ac5fac63c9b06abb5ce07\",\n                \"createdAt\": 1654310394438\n            }\n        ]\n    }\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人按讚列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/getLikeList",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"getLikeList"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "動態貼文",
+			"item": [
+				{
+					"name": "留言",
+					"item": [
+						{
+							"name": "新增一則貼文的留言",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"content\": \"留言～\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/posts/{{postId}}/comment",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts",
+										"{{postId}}",
+										"comment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "edit_one_comment",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"content\":\"哈哈\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/posts/comment/{{commentId}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts",
+										"comment",
+										"{{commentId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete_one_comment",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/posts/comment/{{commentId}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts",
+										"comment",
+										"{{commentId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "按讚",
+					"item": [
+						{
+							"name": "新增一則貼文的讚",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/posts/{{postId}}/like",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts",
+										"{{postId}}",
+										"like"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "取消一則貼文的讚",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/posts/{{postId}}/unlike",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts",
+										"{{postId}}",
+										"unlike"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "取得所有貼文",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -54,7 +552,7 @@
 					"response": []
 				},
 				{
-					"name": "get_one_post",
+					"name": "取得單一貼文",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -73,7 +571,7 @@
 					"response": []
 				},
 				{
-					"name": "add_one_post",
+					"name": "新增貼文",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -106,6 +604,25 @@
 							]
 						},
 						"description": "*   `user`：使用者ID（必填）\n*   `name`：貼文標題（必填）\n*   `content`：貼文內容（必填）\n*   `image`：圖片網址（選填）\n    \n\n``` json\n    \"status\": true,\n    \"message\": \"新增成功\",\n    \"data\": \n        {\n            \"_id\": \"627b3aa376cb9f85554f2350\",\n            \"name\": \"測試一個\",\n            \"image\": null,\n            \"content\": \"我是測試內容\",\n            \"user\": {\n                \"_id\": \"627b338faf6b9972e353ac19\",\n                \"name\": \"TESTMAN\"\n            },\n            \"likes\": 0,\n            \"comment\": 0,\n            \"type\": [],\n            \"tags\": [],\n            \"createdAt\": \"2022-05-11T04:25:07.974Z\"\n        }\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人所有貼文列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts/user/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"user",
+								"{{userId}}"
+							]
+						}
 					},
 					"response": []
 				},
@@ -207,208 +724,10 @@
 			]
 		},
 		{
-			"name": "users",
+			"name": "其他",
 			"item": [
 				{
-					"name": "get_all_users",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "authorization",
-								"value": "Bearer {{token}}",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{url}}/users",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users"
-							]
-						},
-						"description": "``` json\n{\n    \"status\": true,\n    \"data\": [\n        {\n            \"_id\": \"627b338faf6b9972e353ac19\",\n            \"name\": \"TESTMAN\",\n            \"avatar\": \"\",\n            \"likes\": [],\n            \"following\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-11T03:54:55.516Z\"\n        }\n    ]\n}\n\n```"
-					},
-					"response": []
-				},
-				{
-					"name": "get_one_user",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/users/profile",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"profile"
-							]
-						},
-						"description": "``` json\n{\n    \"status\": true,\n    \"data\": [\n        {\n            \"_id\": \"627b338faf6b9972e353ac19\",\n            \"name\": \"TESTMAN\",\n            \"avatar\": \"\",\n            \"likes\": [],\n            \"following\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-11T03:54:55.516Z\"\n        }\n    ]\n}\n\n```"
-					},
-					"response": []
-				},
-				{
-					"name": "edit_one_user",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"TEST_MAN\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/users/profile",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"profile"
-							]
-						},
-						"description": "``` json\n{\n    \"status\": true,\n    \"message\": \"更新成功\",\n}\n\n```"
-					},
-					"response": []
-				},
-				{
-					"name": "update_password",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"password\":\"123456\",\r\n    \"confirmPsw\":\"123456\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/users/updatePassword",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"updatePassword"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete_one_user",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/users/{{userId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"{{userId}}"
-							]
-						},
-						"description": "``` json\n{\n    \"status\": true,\n    \"message\": \"刪除成功\",\n    \"data\": [\n        {\n            \"_id\": \"627b338faf6b9972e353ac19\",\n            \"name\": \"TESTMAN\",\n            \"avatar\": \"\",\n            \"likes\": [],\n            \"following\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-11T03:54:55.516Z\"\n        }\n    ]\n}\n\n```"
-					},
-					"response": []
-				},
-				{
-					"name": "(取消)delete_all_user",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/users",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users"
-							]
-						},
-						"description": "``` json\n{\n    \"status\": true,\n    \"message\": \"全部項目刪除成功\",\n    \"data\": []\n}\n\n```"
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "upload",
-			"item": [
-				{
-					"name": "upload_image",
+					"name": "上傳圖片",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -446,71 +765,6 @@
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "sign_up(add_one_user)",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"TESTMAN3\",\r\n    \"email\":\"testman3@gmail.com\",\r\n    \"password\":\"123456\",\r\n    \"confirmPsw\":\"123456\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/users/sign_up",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"users",
-						"sign_up"
-					]
-				},
-				"description": "*   `name`：string, 暱稱（必填）\n*   `eamil`：string, 帳號（必填）\n*   `password`：string, 密碼（必填）\n*   `confirmPsw`：string, 密碼確認（必填）\n    \n\n``` json\n{\n    \"status\": true,\n    \"message\": \"新增成功\",\n    \"data\": {\n        \"name\": \"TESTMAN\",\n        \"email\": \"testman@mail.com\",\n        \"password\": \"123456\",\n        \"avatar\": \"\",\n        \"likes\": [],\n        \"following\": [],\n        \"_id\": \"627b388a76cb9f85554f2340\",\n        \"comments\": [],\n        \"createdAt\": \"2022-05-11T04:16:10.309Z\"\n    }\n}\n\n```"
-			},
-			"response": []
-		},
-		{
-			"name": "sign_in(token)",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"testman2@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/users/sign_in",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"users",
-						"sign_in"
-					]
-				}
-			},
-			"response": []
 		}
 	],
 	"auth": {
@@ -547,7 +801,8 @@
 		{
 			"key": "url",
 			"value": "https://morning-mountain-18939.herokuapp.com",
-			"type": "string"
+			"type": "string",
+			"disabled": true
 		},
 		{
 			"key": "url",
@@ -558,14 +813,12 @@
 		{
 			"key": "url",
 			"value": "http://localhost:3000",
-			"type": "string",
-			"disabled": true
+			"type": "string"
 		},
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODM5Yzk5M2ZmMjk4MjllOWZkNjcxYSIsImlhdCI6MTY1NDA1Nzg3MCwiZXhwIjoxNjU0MTQ0MjcwfQ.vkBQ6wlPHtEGycl_DYQaXx49maCXCaUhIJz_1IN5MbI",
-			"type": "string",
-			"disabled": true
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWFiZGNiN2JjYzc3Y2YzMTdkNmVhNyIsImlhdCI6MTY1NDMxMTExMywiZXhwIjoxNjU0Mzk3NTEzfQ.HyrBG5YyWnb3tLlmdNEi0Hn-Hg3XteqORpdgqi5BVto",
+			"type": "string"
 		}
 	]
 }
