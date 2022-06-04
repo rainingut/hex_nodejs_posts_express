@@ -1,6 +1,7 @@
 const successHandler = require('../utility/successHandler');
 const { PostModel }      = require('../models/posts');
 const { UserModel }      = require('../models/users');
+const { CommentModel }   = require('../models/comments');
 const resMsg = require('../utility/responseMessage');
 const appError = require('../utility/appError');
 const validator = require('validator');
@@ -17,7 +18,11 @@ const posts = {
         .sort(timeSort)
         .populate({
           path: 'user',
-          select: 'id name',
+          select: 'id name avatar',
+        })
+        .populate({
+          path: 'comments',
+          select: 'content user'
         })
       successHandler(response, {data: posts});
     }
@@ -28,6 +33,13 @@ const posts = {
     async (request, response, next) => {
       const id = request.params.postId;
       const post = await PostModel.findById(id)
+        .populate({
+          path: 'user',
+          select: 'id name avatar',
+        })
+        .populate({
+          path: 'comments',
+        })
       if (post) {
         successHandler(response, { data: post });
       }
@@ -166,7 +178,10 @@ const posts = {
         .find({ user: userId })
         .populate({
           path: 'user',
-          select: 'id name',
+          select: 'id name avatar',
+        })
+        .populate({
+          path: 'comments',
         })
       if (!posts) {
         return next(appError(400, resMsg.noItem))
@@ -215,6 +230,103 @@ const posts = {
       successHandler(response, {
         message: resMsg.deleteSuccess,
         data: post,
+      })
+    }
+  ),
+
+  // 新增一筆留言
+  addComment: asyncError(
+    async (request, response, next) => {
+      const postId = request.params.postId;
+      const userId = request.user.id
+      let { content } = request.body;
+      content = content?.trim();
+      // 新增內容是否完整
+      if (!content) {
+        return next(appError(400, `內容必填`, next));
+      }
+      // 使用者是否存在
+      const isUser = await UserModel.findById(userId);
+      if(!isUser) {
+        return next(appError(400, resMsg.noUser, next));
+      }
+      // 貼文是否存在
+      const isPost = await PostModel.findById(postId);
+      if (!isPost) {
+        return next(appError(400, resMsg.noItem, next));
+      }
+      const comment = await CommentModel.create({
+        content,
+        user: userId,
+        post: postId
+      });
+      if (!comment) {
+        return next(appError(400, resMsg.postFail, next));
+      }
+      successHandler(response, { 
+        message: resMsg.postSuccess,
+        data: comment
+      })
+    }
+  ),
+  
+  // 修改一筆留言
+  editComment: asyncError(
+    async (request, response, next) => {
+      const userId = request.user.id;
+      const commentId = request.params.commentId;
+      let { content } = request.body;
+      content = content?.trim();
+      if (!content) {
+        return next(appError(400, `內容必填`, next));
+      }
+      const comment = await CommentModel.findById(commentId)
+      // 有這則留言嗎
+      if (!comment) {
+        return next(appError(400, resMsg.noItem, next));
+      }
+      // 是不是發文者本人
+      if (userId !== comment?.user?.id){
+        return next(appError(400, resMsg.noSelf, next));
+      }
+      const editComment = await CommentModel.findByIdAndUpdate(
+        {_id: commentId}, 
+        {content},
+        {runValidators: true, returnDocument: 'after'}
+      );
+      if (!editComment){
+        return next(appError(400, resMsg.patchFail, next));
+      }
+      successHandler(response, { 
+        message: resMsg.patchSuccess, 
+        data: editComment 
+      })
+    }
+  ),
+  
+  // 刪除一筆留言
+  deleteComment: asyncError(
+    async (request, response, next) => {
+      const userId = request.user.id;
+      const commentId = request.params.commentId;
+      const comment = await CommentModel.findById(commentId)
+      // 有這則留言嗎
+      if (!comment) {
+        return next(appError(400, resMsg.noItem, next));
+      }
+      // 是不是發文者本人
+      if (userId !== comment?.user?.id){
+        return next(appError(400, resMsg.noSelf, next));
+      }
+      const deleteComment = await CommentModel.findByIdAndDelete(
+        {_id: commentId}, 
+        {returnDocument: 'after'}
+      );
+      if (!deleteComment){
+        return next(appError(400, resMsg.deleteFail, next));
+      }
+      successHandler(response, { 
+        message: resMsg.deleteSuccess
       })
     }
   ),

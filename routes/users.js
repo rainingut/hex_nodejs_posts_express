@@ -6,7 +6,7 @@ const asyncError = require('../utility/asyncError');
 
 router
   .route('/')
-  .get(isAuth, isAdmin, UsersController.getUsers
+  .get(isAuth, UsersController.getUsers
     // #region
     /**
       #swagger.tags = ['Users']
@@ -114,26 +114,6 @@ router
 // 取得按讚列表
 router.get('/getLikeList', isAuth, UsersController.getLikeList);
 
-router
-  .route('/:userId')
-  .delete(isAuth, isAdmin, UsersController.deleteUser
-    // #region
-    /**
-    #swagger.tags = ['Users']
-      #swagger.description = '刪除單一使用者資料'
-      #swagger.security = [{
-        "AuthToken": []
-      }]
-      #swagger.responses[200] = {
-        description: '成功訊息',
-        schema: {
-          "status": true,
-          "message": "刪除成功"
-        }
-      }
-    */
-    // #endregion
-  );
 
 router.patch('/updatePassword', isAuth, UsersController.updatePassword);
 
@@ -167,5 +147,36 @@ router.post('/sign_up', UsersController.addUser
 );
 
 router.post('/sign_in', UsersController.signIn);
+
+// 取得個人追蹤名單
+router.get('/following', isAuth, UsersController.getFollowings)
+
+router
+  .route('/:userId')
+  .delete(isAuth, isAdmin, UsersController.deleteUser
+    // #region
+    /**
+    #swagger.tags = ['Users']
+      #swagger.description = '刪除單一使用者資料'
+      #swagger.security = [{
+        "AuthToken": []
+      }]
+      #swagger.responses[200] = {
+        description: '成功訊息',
+        schema: {
+          "status": true,
+          "message": "刪除成功"
+        }
+      }
+    */
+    // #endregion
+  );
+
+// 加入追蹤
+router.post('/:userId/follow', isAuth, UsersController.addFollowing)
+
+// 取消追蹤
+router.delete('/:userId/unfollow', isAuth, UsersController.deleteFollowing)
+
 
 module.exports = router;

@@ -25,22 +25,32 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
-    comments: {
-      type: [{
-        id: mongoose.Schema.ObjectId,  // posts
-      }],
-    },
-    likes: {
-      type: [mongoose.Schema.ObjectId], // posts
-      default: [],
-    },
-    following: {
-      type: [mongoose.Schema.ObjectId], // users
-      default: [],
-    },
+    followings: [
+      {
+        user:{
+          type: mongoose.Schema.ObjectId,
+          ref: 'users',
+        }, 
+        createdAt: {
+          type: Number,
+          default: Date.now
+        }
+      }
+    ],
+    followers: [
+      {
+        user: {
+          type: mongoose.Schema.ObjectId, // users
+          ref: 'users',
+        },
+        createdAt: {
+          type: Number,
+          default: Date.now
+        }
+      }
+    ],
     createdAt: {
-      type: Date,
-      default: Date.now,
+      type: Number,
     },
     permission: {
       type: String, 
@@ -50,6 +60,9 @@ const userSchema = new mongoose.Schema(
   },
   {
     versionKey: false,
+    timestamps: {
+      currentTime: () => Date.now()
+    }
   }
 );
 

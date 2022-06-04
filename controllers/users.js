@@ -27,7 +27,7 @@ const users = {
   ),
 
   // 註冊會員
-  addUser: asyncError(
+  addUser: asyncError( 
     async (request, response, next) => {
       let {name, email, password, confirmPsw, sex} = request.body;
       const isEmail = validator.isEmail(email);
@@ -64,7 +64,11 @@ const users = {
         }
         successHandler(response, { 
           message: resMsg.postSuccess, 
-          data: newUser
+          data: {
+            id: newUser?.id,
+            name: newUser?.name,
+            email: newUser?.email,
+          }
         })
       }
       else {
@@ -165,12 +169,12 @@ const users = {
       if(id === user?.id){
         return appError(400, resMsg.cantSelf, next);
       }
-      const deleteUser = UserModel.findByIdAndDelete(id);
+      const deleteUser = await UserModel.findByIdAndDelete(id);
       if(!deleteUser){
         return appError(400, resMsg.wrongFormatOrNoItem, next);
       }
       // 刪該使用者的POSTs
-      const posts = await PostModel.fine({user: id})
+      const posts = await PostModel.find({user: id})
       await posts.forEach(async post => {
         await PostModel.findByIdAndDelete(post._id);
       });
@@ -226,6 +230,107 @@ const users = {
         select: 'name avatar'
       })
       successHandler(response, { data: likes });
+    }
+  ),
+
+  // 取得個人追蹤名單
+  getFollowings: asyncError(
+    async(request, response, next) => {
+      const userId = request.user?.id;
+      const followings = await UserModel.findById(userId)
+        .select('followings')
+        .populate({
+          path: 'followings.user',
+          select: 'id name avatar'
+        })
+      if (!followings) {
+        return next(appError(400, resMsg.FAIL, next));
+      }
+      successHandler(response, {
+        data: followings
+      })
+    }
+  ),
+
+  // 加入追蹤
+  addFollowing: asyncError(
+    async(request, response, next) => {
+      const currentUserId = request.user?.id;
+      const otherUserId   = request.params.userId;
+      if (currentUserId === otherUserId){
+        return next(appError(400, `不能追蹤自己`, next));
+      }
+      const following = await UserModel.findOneAndUpdate(
+        { 
+          _id: currentUserId, 
+          'followings.user': {$ne: otherUserId} 
+        },
+        {
+          $addToSet: {followings: {user: otherUserId}}
+        },
+        {
+          runValidators: true, returnDocument: 'after'
+        }
+      );
+      if (!following) {
+        return next(appError(400, `加入追蹤失敗`, next));
+      }
+      const follower = await UserModel.findOneAndUpdate(
+        {
+          _id: otherUserId,
+          'followers.user': {$ne: currentUserId} 
+        },
+        {
+          $addToSet: {followers: {user: currentUserId}}
+        }
+      );
+      if (!follower) {
+        return next(appError(400, `加入追蹤失敗`, next));
+      }
+      successHandler(response, {
+        message: '成功加入追蹤',
+        data: following
+      });
+    }
+  ),
+
+  // 取消追蹤
+  deleteFollowing: asyncError(
+    async(request, response, next) => {
+      const currentUserId = request.user?.id;
+      const otherUserId   = request.params.userId;
+      if (currentUserId === otherUserId){
+        return next(appError(400, `不能對自己作用`, next));
+      }
+      const unfollowing = await UserModel.findOneAndUpdate(
+        { 
+          _id: currentUserId, 
+        },
+        {
+          $pull: {followings: {user: otherUserId}}
+        },
+        {
+          runValidators: true, returnDocument: 'after'
+        }
+      );
+      if (!unfollowing) {
+        return next(appError(400, `取消追蹤失敗`, next));
+      }
+      const unfollower = await UserModel.findOneAndUpdate(
+        {
+          _id: otherUserId,
+        },
+        {
+          $pull: {followers: {user: currentUserId}}
+        }
+      );
+      if (!unfollower) {
+        return next(appError(400, `取消追蹤失敗`, next));
+      }
+      successHandler(response, {
+        message: '成功取消追蹤',
+        data: unfollowing
+      });
     }
   ),
 };

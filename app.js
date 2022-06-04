@@ -105,6 +105,12 @@ app.use(function(error, request, response, next){
 		error.message = `token 無效`;
 		return prodResError(error, response);
 	}
+	if(error.message === 'jwt expired'){
+		error.statusCode = 403;
+		error.isOperational = true;
+		error.message = `token 過期`;
+		return prodResError(error, response);
+	}
 	// imgur
 	if(error?.name === 'MulterFilterError'){
 		error.statusCode = 403;

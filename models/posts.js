@@ -1,5 +1,4 @@
 const mongoose  = require('mongoose');
-const UserModel = require('./users');
 
 const postSchema = new mongoose.Schema(
   {
@@ -26,31 +25,39 @@ const postSchema = new mongoose.Schema(
         ref: 'users',
       },
     ],
-    comment: {
-      type: Number,
-      default: 0
-    },
     createdAt: {
       type: Number
     },
-    type: {
-      type: [String],
-      default: []
-    },
-    tags: {
-      type: [String],
-      default: []
-    },
+    type: [
+      {
+        type: String,
+      },
+    ],
+    tags: [
+      {
+        type: String,
+      },
+    ],
   },
   {
     versionKey: false,
     timestamps: {
       currentTime: () => Date.now()
-    }
+    },
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );;
 
+// 虛擬
+postSchema.virtual('comments', {
+  ref: 'comment',        // commentModel
+  foreignField: 'post',  // 參照post
+  localField: '_id'      // post的Id
+})
+
 const PostModel = new mongoose.model('posts', postSchema);
+
 
 module.exports = {
   PostModel,

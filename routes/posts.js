@@ -192,5 +192,14 @@ router.post('/:postId/like', isAuth, PostsController.addLike);
 // 取消按讚
 router.delete('/:postId/unlike', isAuth, PostsController.deleteLike);
 
+// 新增留言
+router.post('/:postId/comment', isAuth, PostsController.addComment);
+
+// 修改及刪除留言
+router
+  .route('/comment/:commentId')
+  .patch(isAuth, PostsController.editComment)
+  .delete(isAuth, PostsController.deleteComment);
+
 
 module.exports = router;
