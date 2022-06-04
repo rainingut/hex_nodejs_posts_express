@@ -801,8 +801,7 @@
 		{
 			"key": "url",
 			"value": "https://morning-mountain-18939.herokuapp.com",
-			"type": "string",
-			"disabled": true
+			"type": "string"
 		},
 		{
 			"key": "url",
@@ -813,12 +812,14 @@
 		{
 			"key": "url",
 			"value": "http://localhost:3000",
-			"type": "string"
+			"type": "string",
+			"disabled": true
 		},
 		{
 			"key": "token",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWFiZGNiN2JjYzc3Y2YzMTdkNmVhNyIsImlhdCI6MTY1NDMxMTExMywiZXhwIjoxNjU0Mzk3NTEzfQ.HyrBG5YyWnb3tLlmdNEi0Hn-Hg3XteqORpdgqi5BVto",
-			"type": "string"
+			"type": "string",
+			"disabled": true
 		}
 	]
 }
